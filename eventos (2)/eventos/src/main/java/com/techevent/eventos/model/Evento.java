@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -26,13 +25,15 @@ public class Evento {
     private Integer capacidadeMaxima;
     @NotNull
     private BigDecimal precoBase;
+    private BigDecimal precoTotal;
 
-    public UUID getId() {
-        return id;
-    }
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public UUID getId() {
+        return id;
     }
 
     public String getNome() {
@@ -81,5 +82,13 @@ public class Evento {
 
     public void setPrecoBase(BigDecimal precoBase) {
         this.precoBase = precoBase;
+    }
+
+    public BigDecimal getPrecoTotal() {
+        return precoTotal;
+    }
+
+    public void setPrecoTotal(BigDecimal precoTotal) {
+        this.precoTotal = precoTotal;
     }
 }
