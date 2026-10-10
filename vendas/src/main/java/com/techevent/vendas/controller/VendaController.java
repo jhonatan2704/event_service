@@ -28,7 +28,7 @@ public class VendaController {
     @GetMapping("/pagamento/vendas/{nome}")
     public AutorizarVendaDto obterAutorizacao(@PathVariable("nome") String nome) {
         // Exemplo fixo, só para testar a ligação.
-        // Depois você troca por uma busca real (service/repository).
+        // Próximo passo: criar buscar real
         BigDecimal valorBruto = new BigDecimal("100.00");
         BigDecimal valorDesconto = new BigDecimal("10.00");
         BigDecimal valorTotal = valorBruto.subtract(valorDesconto);
