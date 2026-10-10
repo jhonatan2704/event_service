@@ -21,12 +21,22 @@ public class EventoService {
         this.client = client;
     }
 
-    private BigDecimal obterStatusPagamento(String nome) {
+    private BigDecimal obterStatusPagamento(String nome, BigDecimal precoBase) {
         AutorizarVendaDto autorizacao = client.obterAutorizacao(nome);
+
         if (autorizacao.valorBruto() == null || autorizacao.valorBruto().compareTo(BigDecimal.ZERO) == 0) {
             return BigDecimal.ZERO;
         }
-        return autorizacao.valorTotal();
+        int comparacao = autorizacao.valorBruto().compareTo(precoBase);
+
+        if (comparacao == 0) {
+            return autorizacao.valorTotal();
+        } else if (comparacao > 0) {
+            BigDecimal diferenca = autorizacao.valorTotal().subtract(precoBase);
+            return autorizacao.valorTotal().subtract(diferenca);
+        } else {
+            throw new IllegalArgumentException("O valor bruto (" + autorizacao.valorBruto() + ") é menor que o preço base (" + precoBase + ").");
+        }
     }
 
     public Evento adicionarEvento(EventoDto eventoDto){
@@ -38,7 +48,7 @@ public class EventoService {
         evento.setCapacidadeMaxima(eventoDto.getCapacidadeMaxima());
         evento.setPrecoBase(eventoDto.getPrecoBase());
         eventoRepository.save(evento);
-        evento.setPrecoTotal(obterStatusPagamento(evento.getNome()));
+        evento.setPrecoTotal(obterStatusPagamento(evento.getNome(), evento.getPrecoBase()));
         return eventoRepository.save(evento);
     }
 
