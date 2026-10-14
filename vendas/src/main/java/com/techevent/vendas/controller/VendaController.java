@@ -1,6 +1,7 @@
 package com.techevent.vendas.controller;
 
-import com.techevent.vendas.model.AutorizarVendaDto;
+import com.techevent.vendas.dto.AutorizarVendaDto;
+import com.techevent.vendas.dto.CalcularVendaDto;
 import com.techevent.vendas.model.Venda;
 import com.techevent.vendas.service.VendaService;
 import jakarta.validation.Valid;
@@ -34,5 +35,10 @@ public class VendaController {
         BigDecimal valorTotal = valorBruto.subtract(valorDesconto);
 
         return new AutorizarVendaDto(valorBruto, valorTotal, valorDesconto);
+    }
+
+    @PostMapping("/pagamento")
+    public AutorizarVendaDto calcularPagamento(@RequestBody @Valid CalcularVendaDto dto) {
+        return vendaService.calcularPagamento(dto.precoBase());
     }
 }
