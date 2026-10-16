@@ -8,9 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 @FeignClient("vendas")
 public interface AutorizacaoPagamentoClient {
-    @GetMapping("/vendas/pagamento/vendas/{nome}")
-        AutorizarVendaDto obterAutorizacao(@PathVariable("nome") String nome);
-
     @PostMapping("/vendas/pagamento")
     AutorizarVendaDto calcularPagamento(@RequestBody CalcularVendaDto dto);
 }

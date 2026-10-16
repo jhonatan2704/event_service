@@ -26,17 +26,6 @@ public class VendaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(novaVenda);
     }
 
-    @GetMapping("/pagamento/vendas/{nome}")
-    public AutorizarVendaDto obterAutorizacao(@PathVariable("nome") String nome) {
-        // Exemplo fixo, só para testar a ligação.
-        // Próximo passo: criar buscar real
-        BigDecimal valorBruto = new BigDecimal("100.00");
-        BigDecimal valorDesconto = new BigDecimal("10.00");
-        BigDecimal valorTotal = valorBruto.subtract(valorDesconto);
-
-        return new AutorizarVendaDto(valorBruto, valorTotal, valorDesconto);
-    }
-
     @PostMapping("/pagamento")
     public AutorizarVendaDto calcularPagamento(@RequestBody @Valid CalcularVendaDto dto) {
         return vendaService.calcularPagamento(dto.precoBase());
